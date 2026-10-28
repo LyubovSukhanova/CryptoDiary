@@ -14,6 +14,7 @@
                         </template>
                     </Column>
                     <Column field="coin_name" header="Монета" sortable />
+                    <Column field="coin_symbol" header="Символ" sortable />
                     <Column field="number" header="Количество" sortable />
                     <Column field="price" header="Цена, $" sortable />
                     <Column field="price" header="Сумма, $">
@@ -31,7 +32,7 @@
                     </Column>
                 </DataTable>
             </div>
-            <div class="vertical width30">
+            <div class="vertical right-part">
                 <ProfitLossCard />
             </div>
         </div>
@@ -135,11 +136,11 @@ const onEditRecord = (event: any): void => {
 
 <style scoped>
 .table {
-    width: 70%;
+    width: 60%;
 }
 
-.width30 {
-    width: 30%;
+.right-part {
+    width: 40%;
 }
 
 .sale-purchase {

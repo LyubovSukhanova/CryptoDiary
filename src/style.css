@@ -707,3 +707,13 @@ tbody td {
     box-shadow: 0 4px 12px var(--shadow);
     background-color: var(--card-bg);
 }
+
+.profit {
+    font-weight: 600;
+    color: var(--success);
+}
+
+.loss {
+    font-weight: 600;
+    color: var(--danger);
+}

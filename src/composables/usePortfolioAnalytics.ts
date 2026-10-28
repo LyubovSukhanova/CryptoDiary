@@ -11,7 +11,7 @@ interface CoinPrice {
     percent_change_24h: number;
 }
 
-interface CoinsPricesInfo {
+export interface CoinsPricesInfo {
     id: string;
     symbol: string;
     current_number: number;
