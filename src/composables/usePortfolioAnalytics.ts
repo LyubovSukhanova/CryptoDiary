@@ -1,6 +1,7 @@
 // Функции для расчета аналитики портфолио
 import { computed, ref, watch, type Ref } from "vue";
 import type { DiaryRecord } from "../stores/useDiaryStore";
+import { API_BASE_URL } from "../constants";
 import axios from "axios";
 
 interface CoinPrice {
@@ -48,7 +49,7 @@ export function usePortfolioAnalytics(records: Ref<DiaryRecord[]>) {
         loading.value = true;
         error.value = null;
         try {
-            const response = await axios.get(`/api/ticker/?id=${stale.join(",")}`);
+            const response = await axios.get(`${API_BASE_URL}/api/ticker/?id=${stale.join(",")}`);
             const data = response.data;
             for (const t of data) {
                 prices.value[String(t.id)] = {

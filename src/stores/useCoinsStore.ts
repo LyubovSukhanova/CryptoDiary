@@ -1,5 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
+import { API_BASE_URL } from "../constants";
 import axios from "axios";
 
 export interface Coin {
@@ -32,7 +33,7 @@ export const useCoinsStore = defineStore("coins", () => {
     const fetchCoinsTop100 = async (): Promise<void> => {
         loading.value = true;
         try {
-            const response = await axios.get<TickerResponse>(`/api/tickers/`, {
+            const response = await axios.get<TickerResponse>(`${API_BASE_URL}/api/tickers/`, {
                 params: { start: 0, limit: 100 },
             });
             const data = response.data.data;
