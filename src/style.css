@@ -1,0 +1,709 @@
+/* ============================================================
+   LAYER ORDER
+   Важно: PrimeVue использует @layer, чтобы ваши стили
+   имели приоритет, объявляйте их в правильном порядке.
+   ============================================================ */
+@layer primevue, app;
+
+/* ============================================================
+   ROOT / THEME TOKENS
+   ============================================================ */
+:root {
+    /* ===== ТЕКСТ ===== */
+    --text: rgba(21, 47, 74, 1);
+    --text-muted: rgba(93, 118, 145, 1);
+    --text-h: rgba(13, 31, 56, 1);
+    --inverted-text: rgba(255, 255, 255, 1);
+
+    /* ===== ФОНЫ ===== */
+    --bg: rgb(249, 251, 253);
+    --bg-elevated: rgba(255, 255, 255, 1);
+    --bg-sunken: rgba(228, 238, 248, 1);
+    --border: rgba(189, 215, 238, 1);
+    --border-strong: rgba(146, 184, 218, 1);
+    --code-bg: rgba(228, 238, 248, 1);
+    --card-bg: rgb(255, 255, 255);
+
+    /* ===== АКЦЕНТЫ ===== */
+    --accent: rgba(41, 128, 185, 1);
+    --accent-hover: rgba(31, 106, 156, 1);
+    --accent-soft: rgba(41, 128, 185, 0.1);
+    --accent-border: rgba(41, 128, 185, 0.45);
+    --accent-bg: rgba(41, 128, 185, 0.1);
+    --accent-contrast: rgba(255, 255, 255, 1);
+
+    --accent-2: rgba(96, 110, 241, 1);
+    --accent-2-soft: rgba(96, 110, 241, 0.1);
+    --accent-2-border: rgba(96, 110, 241, 0.45);
+
+    /* ===== СТАТУСЫ ===== */
+    --success: rgba(46, 139, 87, 1);
+    --success-bg: rgba(46, 139, 87, 0.12);
+    --warning: rgba(214, 145, 45, 1);
+    --warning-bg: rgba(214, 145, 45, 0.14);
+    --danger: rgba(200, 70, 70, 1);
+    --danger-bg: rgba(200, 70, 70, 0.12);
+    --info: rgba(41, 128, 185, 1);
+    --info-bg: rgba(41, 128, 185, 0.12);
+    --purchase: rgb(14, 185, 66);
+    --sale: rgb(240, 20, 20);
+
+    /* ===== СОЦИАЛЬНЫЕ КНОПКИ ===== */
+    --social-bg: rgba(214, 234, 248, 0.65);
+    --social-bg-hover: rgba(189, 215, 238, 0.9);
+
+    /* ===== ТЕНИ ===== */
+    --shadow: rgba(41, 128, 185, 0.12) 0 10px 15px -3px, rgba(41, 128, 185, 0.08) 0 4px 6px -2px;
+    --shadow-sm: rgba(41, 128, 185, 0.1) 0 1px 2px;
+    --shadow-lg: rgba(41, 128, 185, 0.18) 0 18px 40px -8px;
+    --shadow-color: rgba(41, 128, 185, 0.25);
+
+    /* ===== ТАБЛИЦА ===== */
+    --thead: rgba(52, 101, 164, 1);
+    --thead-text: rgba(255, 255, 255, 1);
+    --thead-hover: rgba(41, 82, 138, 1);
+    --selected-row: rgba(180, 212, 240, 1);
+    --selected-row-text: rgba(21, 47, 74, 1);
+    --row-even: rgba(245, 251, 255, 1);
+    --row-odd: rgba(255, 255, 255, 1);
+    --row-hover: rgba(214, 234, 248, 0.6);
+    --row-border: rgba(189, 215, 238, 0.7);
+
+    /* ===== МЕНЮ / PRIMEVUE ===== */
+    --menu-background: rgba(223, 236, 247, 1);
+    --menu-text: rgba(52, 101, 164, 1);
+    --menu-text-hover: rgba(41, 128, 185, 1);
+    --menu-item-hover: rgba(214, 234, 248, 0.8);
+    --menu-item-active: rgba(41, 128, 185, 0.14);
+    --menu-border: rgba(189, 215, 238, 1);
+
+    /* ===== ТИПОГРАФИКА ===== */
+    --sans: system-ui, "Segoe UI", Roboto, sans-serif;
+    --heading: system-ui, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, Consolas, monospace;
+
+    /* ===== БАЗА ===== */
+    font: 18px/145% var(--sans);
+    letter-spacing: 0.18px;
+    color-scheme: light dark;
+    color: var(--text);
+    background: var(--bg);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* ============================================================
+       СВЯЗКА С ТОКЕНАМИ PRIMEVUE 4
+       Переопределяем семантические токены PrimeVue
+       нашими значениями, чтобы компоненты подхватили тему.
+       ============================================================ */
+    --p-primary-color: var(--accent);
+    --p-primary-hover-color: var(--accent-hover);
+    --p-primary-active-color: var(--accent-hover);
+    --p-primary-contrast-color: var(--accent-contrast);
+
+    --p-content-background: var(--bg-elevated);
+    --p-content-border-color: var(--border);
+    --p-content-color: var(--text);
+
+    --p-text-color: var(--text);
+    --p-text-muted-color: var(--text-muted);
+
+    --p-surface-0: var(--bg-elevated);
+    --p-surface-50: var(--bg);
+    --p-surface-100: var(--bg-sunken);
+    --p-surface-200: var(--border);
+    --p-surface-300: var(--border-strong);
+
+    --p-border-radius-md: 6px;
+
+    /* Dialog */
+    --p-dialog-background: var(--bg-elevated);
+    --p-dialog-border-color: var(--border);
+    --p-dialog-color: var(--text);
+    --p-dialog-header-background: var(--bg-elevated);
+    --p-dialog-header-color: var(--text-h);
+    --p-dialog-header-border-color: var(--border);
+    --p-dialog-title-font-weight: 600;
+    --p-dialog-title-font-size: 1.25rem;
+
+    /* InputText */
+    --p-inputtext-background: var(--bg-elevated);
+    --p-inputtext-border-color: var(--border);
+    --p-inputtext-color: var(--text);
+    --p-inputtext-hover-border-color: var(--border-strong);
+    --p-inputtext-focus-border-color: var(--accent);
+    --p-inputtext-focus-ring-color: var(--accent-soft);
+    --p-inputtext-placeholder-color: var(--text-muted);
+
+    /* Button */
+    --p-button-primary-background: var(--accent);
+    --p-button-primary-border-color: var(--accent);
+    --p-button-primary-color: var(--accent-contrast);
+    --p-button-primary-hover-background: var(--accent-hover);
+    --p-button-primary-hover-border-color: var(--accent-hover);
+    --p-button-secondary-background: var(--bg-sunken);
+    --p-button-secondary-border-color: var(--border);
+    --p-button-secondary-color: var(--text);
+
+    /* Menu / Menubar */
+    --p-menu-background: var(--menu-background);
+    --p-menu-border-color: var(--menu-border);
+    --p-menu-color: var(--menu-text);
+    --p-menu-item-focus-background: var(--menu-item-hover);
+    --p-menu-item-active-background: var(--menu-item-active);
+    --p-menu-item-color: var(--menu-text);
+    --p-menu-item-icon-color: var(--menu-text);
+
+    --p-menubar-background: var(--menu-background);
+    --p-menubar-border-color: var(--menu-border);
+    --p-menubar-color: var(--menu-text);
+
+    @media (max-width: 1024px) {
+        font-size: 16px;
+    }
+}
+
+/* ============================================================
+   DARK THEME
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Текст */
+        --text: rgba(199, 213, 232, 1);
+        --text-muted: rgba(138, 158, 184, 1);
+        --text-h: rgba(240, 246, 255, 1);
+        --inverted-text: rgba(11, 20, 32, 1);
+
+        /* Фоны */
+        --bg: rgba(15, 23, 32, 1);
+        --bg-elevated: rgba(23, 35, 50, 1);
+        --bg-sunken: rgba(11, 18, 26, 1);
+        --border: rgba(93, 130, 170, 0.32);
+        --border-strong: rgba(93, 130, 170, 0.5);
+        --code-bg: rgba(22, 33, 46, 1);
+
+        /* Акценты */
+        --accent: rgba(93, 173, 226, 1);
+        --accent-hover: rgba(120, 190, 235, 1);
+        --accent-soft: rgba(93, 173, 226, 0.15);
+        --accent-border: rgba(93, 173, 226, 0.5);
+        --accent-bg: rgba(93, 173, 226, 0.15);
+        --accent-contrast: rgba(11, 20, 32, 1);
+
+        --accent-2: rgba(139, 152, 255, 1);
+        --accent-2-soft: rgba(139, 152, 255, 0.15);
+        --accent-2-border: rgba(139, 152, 255, 0.5);
+
+        /* Статусы */
+        --success: rgba(88, 190, 130, 1);
+        --success-bg: rgba(88, 190, 130, 0.15);
+        --warning: rgba(240, 180, 80, 1);
+        --warning-bg: rgba(240, 180, 80, 0.15);
+        --danger: rgba(235, 110, 110, 1);
+        --danger-bg: rgba(235, 110, 110, 0.15);
+        --info: rgba(93, 173, 226, 1);
+        --info-bg: rgba(93, 173, 226, 0.15);
+
+        /* Социальные */
+        --social-bg: rgba(40, 58, 80, 0.6);
+        --social-bg-hover: rgba(52, 74, 100, 0.8);
+
+        /* Тени */
+        --shadow: rgba(0, 0, 0, 0.45) 0 10px 15px -3px, rgba(0, 0, 0, 0.3) 0 4px 6px -2px;
+        --shadow-sm: rgba(0, 0, 0, 0.35) 0 1px 2px;
+        --shadow-lg: rgba(0, 0, 0, 0.55) 0 18px 40px -8px;
+        --shadow-color: rgba(0, 0, 0, 0.5);
+
+        /* Таблица */
+        --thead: rgba(41, 78, 128, 1);
+        --thead-text: rgba(240, 246, 255, 1);
+        --thead-hover: rgba(52, 96, 152, 1);
+        --selected-row: rgba(41, 82, 130, 0.55);
+        --selected-row-text: rgba(240, 246, 255, 1);
+        --row-even: rgba(255, 255, 255, 0.03);
+        --row-odd: rgba(255, 255, 255, 0.06);
+        --row-hover: rgba(93, 173, 226, 0.1);
+        --row-border: rgba(93, 130, 170, 0.25);
+
+        /* Меню */
+        --menu-background: rgba(23, 35, 50, 1);
+        --menu-text: rgba(199, 213, 232, 1);
+        --menu-text-hover: rgba(240, 246, 255, 1);
+        --menu-item-hover: rgba(93, 173, 226, 0.12);
+        --menu-item-active: rgba(93, 173, 226, 0.2);
+        --menu-border: rgba(93, 130, 170, 0.3);
+
+        /* PrimeVue dark overrides */
+        --p-content-background: var(--bg-elevated);
+        --p-content-border-color: var(--border);
+        --p-content-color: var(--text);
+
+        --p-dialog-background: var(--bg-elevated);
+        --p-dialog-border-color: var(--border);
+        --p-dialog-color: var(--text);
+
+        --p-inputtext-background: var(--bg-sunken);
+        --p-inputtext-border-color: var(--border);
+        --p-inputtext-color: var(--text);
+
+        --p-menu-background: var(--menu-background);
+        --p-menu-border-color: var(--menu-border);
+        --p-menu-color: var(--menu-text);
+
+        --p-menubar-background: var(--menu-background);
+        --p-menubar-border-color: var(--menu-border);
+        --p-menubar-color: var(--menu-text);
+    }
+
+    #social .button-icon {
+        filter: invert(1) brightness(2);
+    }
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: var(--sans);
+    color: var(--text);
+    background: var(--bg);
+}
+
+h1,
+h2 {
+    font-family: var(--heading);
+    font-weight: 500;
+    color: var(--text-h);
+}
+
+h1 {
+    font-size: 56px;
+    letter-spacing: -1.68px;
+    margin: 32px 0;
+}
+
+h2 {
+    font-size: 24px;
+    line-height: 118%;
+    letter-spacing: -0.24px;
+    margin: 0 0 8px;
+}
+
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 36px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+}
+
+p {
+    margin: 0;
+}
+
+code,
+.counter {
+    font-family: var(--mono);
+    display: inline-flex;
+    border-radius: 4px;
+    color: var(--text-h);
+}
+
+code {
+    font-size: 15px;
+    line-height: 135%;
+    padding: 4px 8px;
+    background: var(--code-bg);
+}
+
+.counter {
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border: 2px solid transparent;
+    transition:
+        border-color 0.3s,
+        background 0.3s;
+    margin-bottom: 24px;
+}
+
+.counter:hover {
+    border-color: var(--accent-border);
+    background: var(--accent-soft);
+}
+
+.counter:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+#app {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+}
+
+#center {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    place-content: center;
+    place-items: center;
+    flex-grow: 1;
+}
+
+@media (max-width: 1024px) {
+    #center {
+        padding: 32px 20px 24px;
+        gap: 18px;
+    }
+}
+
+#next-steps {
+    display: flex;
+    border-top: 1px solid var(--border);
+    text-align: left;
+}
+
+#next-steps > div {
+    flex: 1 1 0;
+    padding: 32px;
+}
+
+#next-steps .icon {
+    margin-bottom: 16px;
+    width: 22px;
+    height: 22px;
+}
+
+#docs {
+    border-right: 1px solid var(--border);
+}
+
+#next-steps ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 8px;
+    margin: 32px 0 0;
+}
+
+#next-steps ul .logo {
+    height: 18px;
+}
+
+#next-steps ul a {
+    color: var(--text-h);
+    font-size: 16px;
+    border-radius: 6px;
+    background: var(--social-bg);
+    display: flex;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition:
+        box-shadow 0.3s,
+        background 0.2s,
+        border-color 0.2s;
+}
+
+#next-steps ul a:hover {
+    box-shadow: var(--shadow);
+    background: var(--social-bg-hover);
+    border-color: var(--accent-border);
+}
+
+#next-steps ul a .button-icon {
+    height: 18px;
+    width: 18px;
+}
+
+@media (max-width: 1024px) {
+    #next-steps {
+        flex-direction: column;
+        text-align: center;
+    }
+    #docs {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+    #next-steps > div {
+        padding: 24px 20px;
+    }
+    #next-steps ul {
+        margin-top: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    #next-steps ul li {
+        flex: 1 1 calc(50% - 8px);
+    }
+    #next-steps ul a {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+#spacer {
+    height: 88px;
+    border-top: 1px solid var(--border);
+}
+
+@media (max-width: 1024px) {
+    #spacer {
+        height: 48px;
+    }
+}
+
+.ticks {
+    position: relative;
+    width: 100%;
+}
+
+.ticks::before,
+.ticks::after {
+    content: "";
+    position: absolute;
+    top: -4.5px;
+    border: 5px solid transparent;
+}
+
+.ticks::before {
+    left: 0;
+    border-left-color: var(--border);
+}
+
+.ticks::after {
+    right: 0;
+    border-right-color: var(--border);
+}
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+tr {
+    font-size: medium;
+}
+
+thead {
+    background-color: var(--thead);
+    color: var(--thead-text);
+    font-size: large;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+tbody tr:nth-child(even) {
+    background: var(--row-even);
+}
+tbody tr:nth-child(odd) {
+    background: var(--row-odd);
+}
+tbody tr:hover {
+    background: var(--row-hover);
+}
+tbody td {
+    border-bottom: 1px solid var(--row-border);
+}
+
+.p-datatable-row-selected {
+    background-color: var(--selected-row) !important;
+    color: var(--selected-row-text) !important;
+    font-weight: 500;
+}
+
+/* ============================================================
+   PRIMEVUE — точечные доработки поверх темы
+   ============================================================ */
+
+/* Menu (popup) — обводка и тень в тон теме */
+.p-menu {
+    background: var(--menu-background);
+    border: 1px solid var(--menu-border);
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+}
+
+.p-menu .p-menuitem-link,
+.p-menu .p-menuitem-content {
+    color: var(--menu-text);
+    transition:
+        background 0.2s,
+        color 0.2s;
+}
+
+.p-menu .p-menuitem-link:hover,
+.p-menu .p-menuitem-content:hover {
+    background: var(--menu-item-hover);
+    color: var(--menu-text-hover);
+}
+
+.p-menu .p-menuitem-link.p-menuitem-link-active,
+.p-menu .p-menuitem-content.p-menuitem-content-active {
+    background: var(--menu-item-active);
+    color: var(--accent);
+}
+
+/* Menubar — фон и границы под тему */
+.p-menubar {
+    background: var(--menu-background);
+    border: 1px solid var(--menu-border);
+    border-radius: 6px;
+}
+
+/* Dialog — заголовок и футер в тон */
+.p-dialog .p-dialog-header {
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.25rem;
+}
+
+.p-dialog .p-dialog-content {
+    padding: 1.25rem;
+}
+
+.p-dialog .p-dialog-footer {
+    border-top: 1px solid var(--border);
+    padding: 1rem 1.25rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+/* InputText — плавный фокус */
+.p-inputtext {
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+.p-inputtext:enabled:focus {
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ============================================================
+   Стили для форм
+   ============================================================ */
+.input-caption {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.input-caption .caption {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-h);
+}
+
+.input-caption .p-inputtext {
+    width: 100%;
+}
+
+.p-iconfield {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.p-iconfield > .p-inputtext {
+    width: 100%;
+}
+
+.p-iconfield-right > .p-input-icon {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    margin-top: 0;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.footer-buttons {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 10px;
+    align-items: center;
+    background: #fff;
+    z-index: 10;
+}
+
+/* ============================================================
+   Стили для оформления личного кабинета
+   ============================================================ */
+.user-cabinet {
+    cursor: pointer;
+}
+
+/* ============================================================
+   Структурирующие стили
+   ============================================================ */
+.vertical {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.horizontal {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.string {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.gap5 {
+    gap: 5px;
+}
+
+.gap10 {
+    gap: 10px;
+}
+
+.padding10 {
+    padding: 10px;
+}
+
+/* ============================================================
+   Стили для карточек
+   ============================================================ */
+.card-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.1rem;
+    box-shadow: 0 4px 12px var(--shadow);
+    background-color: var(--card-bg);
+}
