@@ -717,3 +717,8 @@ tbody td {
     font-weight: 600;
     color: var(--danger);
 }
+
+.muted {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}

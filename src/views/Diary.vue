@@ -3,11 +3,11 @@
     <div v-if="user" class="vertical">
         <h2>Мои покупки/продажи</h2>
         <Button label="Добавить запись" @click="onAddNewRecord" style="margin-left: auto; margin-right: 10px;" />
-        <div class="horizontal padding10 gap10">
+        <div class="horizontal padding10 gap10 top">
             <div class="table-wrapper table">
                 <DataTable :value="records" dataKey="id" contextMenu selectionMode="single"
                     v-model:selection="selectedRecord" v-model:contextMenuSelection="contextMenuRecord"
-                    @row-contextmenu="onRowContextMenu" @row-dblclick="onEditRecord" scroll-height="400px">
+                    @row-contextmenu="onRowContextMenu" @row-dblclick="onEditRecord" scroll-height="52vh">
                     <Column field="logged_at" header="Дата" sortable>
                         <template #body="{ data }">
                             {{ new Date(data.logged_at).toLocaleString('ru-RU') }}
@@ -33,7 +33,13 @@
                 </DataTable>
             </div>
             <div class="vertical right-part">
-                <ProfitLossCard />
+                <ProfitLossCard :loading="loading" :error="error" :totals="totals"
+                    :detailed-coins-prices="detailedCoinsPrices" />
+            </div>
+        </div>
+        <div class="horizontal padding10 gap10 bottom">
+            <div class="assets">
+                <AssetAllocationDiagram :loading="loading" :error="error" :allocation="allocation" />
             </div>
         </div>
         <ContextMenu ref="cm" :model="menuModel" />
@@ -54,6 +60,8 @@ import ProfitLossCard from '../components/Diary/ProfitLossCard.vue';
 import { storeToRefs } from 'pinia';
 import { ref, onMounted, computed } from 'vue';
 import router from '../router';
+import AssetAllocationDiagram from '../components/Diary/AssetAllocationDiagram.vue';
+import { usePortfolioAnalytics } from '../composables/usePortfolioAnalytics';
 
 interface ContextMenuRef {
     show: (event: Event) => void;
@@ -68,6 +76,8 @@ const diaryStore = useDiaryStore();
 const { user } = storeToRefs(userStore);
 const { records } = storeToRefs(diaryStore);
 const recordId = ref<number | undefined>(undefined);
+
+const { loading, error, totals, detailedCoinsPrices, allocation } = usePortfolioAnalytics(records)
 
 const selectedRecordId = computed((): number => {
     return selectedRecord.value?.id || 0;
@@ -154,5 +164,18 @@ const onEditRecord = (event: any): void => {
 
 .purchase {
     color: var(--purchase);
+}
+
+.assets {
+    display: flex;
+    width: 50%;
+}
+
+.top {
+    height: 50vh;
+}
+
+.bottom {
+    height: 35vh;
 }
 </style>

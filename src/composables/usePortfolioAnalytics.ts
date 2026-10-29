@@ -19,6 +19,19 @@ export interface CoinsPricesInfo {
     current_cost: number;
 }
 
+export interface Allocation {
+    id: string;
+    symbol: string;
+    value: number;
+}
+
+export interface Totals {
+    cost: number;
+    currentValue: number;
+    pnl: number;
+    pnlPercent: number;
+}
+
 export function usePortfolioAnalytics(records: Ref<DiaryRecord[]>) {
     const prices = ref<Record<string, CoinPrice & { fetchedAt: number }>>({});
     const loading = ref<boolean>(false);
@@ -69,7 +82,7 @@ export function usePortfolioAnalytics(records: Ref<DiaryRecord[]>) {
 
     watch(uniqueCoins, fetchPrices, { immediate: true });
 
-    const totals = computed(() => {
+    const totals = computed((): Totals => {
         // параметры общей стоимости портфеля
         let cost = 0; // себестоимость
         let currentValue = 0; // текущая стоимость
@@ -116,15 +129,15 @@ export function usePortfolioAnalytics(records: Ref<DiaryRecord[]>) {
                 d.prime_cost -= r.price * r.number;
             }
         }
-        for (let d of data) {
-            const price = prices.value[d.id.toString()].price_usd;
-            d.current_cost = d.current_number * price;
+        for (const d of data) {
+            const p = prices.value[d.id];
+            d.current_cost = p ? d.current_number * p.price_usd : 0;
         }
         return data;
     });
 
-    const allocation = computed(() => {
-        const map = new Map<string, { name: string; value: number }>();
+    const allocation = computed<Allocation[]>(() => {
+        const map = new Map<string, Allocation>();
         for (const r of records.value) {
             if (!r.ref_coin || !r.number) continue;
             const p = prices.value[String(r.ref_coin)];
@@ -136,10 +149,13 @@ export function usePortfolioAnalytics(records: Ref<DiaryRecord[]>) {
             if (existing) {
                 existing.value += value;
             } else {
-                map.set(key, { name: r.coin_name ?? key, value });
+                map.set(key, {
+                    id: r.ref_coin.toString(),
+                    symbol: r.coin_symbol ?? p.symbol ?? key, // ← добавьте p.symbol как fallback
+                    value,
+                });
             }
         }
-        // Оставляем только положительные позиции
         return [...map.values()].filter((a) => a.value > 0);
     });
 

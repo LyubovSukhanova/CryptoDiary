@@ -28,35 +28,37 @@
             </DataTable>
             <div class="total">
                 <span style="padding-right: 5px;">Текущая стоимость портфеля</span>
-                <span>${{ totals.currentValue.toFixed(2).replaceAll('.', ',') }}</span>
+                <span v-if="totals">${{ totals.currentValue.toFixed(2).replaceAll('.', ',') }}</span>
             </div>
-            <div :class="totals.pnl >= 0 ? 'profit' : 'loss'">
-                <span>{{ totals.pnl >= 0 ? '▲' : '▼' }}</span>
-                {{ totals.pnl >= 0 ? '+' : '' }}{{ `$${totals.pnl.toFixed(2).replaceAll('.', ',')}` }}
-                ({{ totals.pnlPercent.toFixed(2) }}%)
+            <div :class="totals && totals.pnl >= 0 ? 'profit' : 'loss'">
+                <span v-if="totals">{{ totals.pnl >= 0 ? '▲' : '▼' }}</span>
+                <span v-if="totals">
+                    {{ totals.pnl >= 0 ? '+' : '' }}{{ `$${totals.pnl.toFixed(2).replaceAll('.', ',')}` }}
+                </span>
+                <span v-if="totals">({{ totals.pnlPercent.toFixed(2) }}%)</span>
             </div>
-            <div class="muted">Себестоимость: ${{ totals.cost.toFixed(2).replaceAll('.', ',') }}</div>
+            <div v-if="totals" class="muted">Себестоимость: ${{ totals.cost.toFixed(2).replaceAll('.', ',') }}</div>
         </template>
     </div>
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useDiaryStore } from '../../stores/useDiaryStore'
-import { usePortfolioAnalytics } from '../../composables/usePortfolioAnalytics'
 import { Column, DataTable } from 'primevue'
+import type { Totals, CoinsPricesInfo } from '../../composables/usePortfolioAnalytics'
 
-const diaryStore = useDiaryStore()
-const { records } = storeToRefs(diaryStore)
+interface Props {
+    loading: boolean;
+    error: string | null;
+    totals: Totals | null;
+    detailedCoinsPrices: CoinsPricesInfo[] | [];
+}
 
-const { loading, error, totals, detailedCoinsPrices } = usePortfolioAnalytics(records)
+const props = withDefaults(defineProps<Props>(), {
+    loading: true,
+    error: null,
+    totals: null,
+    detailedCoinsPrices: () => [],
+});
 
 
 </script>
-
-<style scoped>
-.muted {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-}
-</style>
