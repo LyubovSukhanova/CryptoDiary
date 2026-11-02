@@ -705,7 +705,6 @@ tbody td {
     border-radius: 0.5rem;
     padding: 0.1rem;
     box-shadow: 0 4px 12px var(--shadow);
-    background-color: var(--card-bg);
 }
 
 .profit {

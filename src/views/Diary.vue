@@ -4,7 +4,7 @@
         <h2>Мои покупки/продажи</h2>
         <Button label="Добавить запись" @click="onAddNewRecord" style="margin-left: auto; margin-right: 10px;" />
         <div class="horizontal padding10 gap10 top">
-            <div class="table-wrapper table">
+            <div class="table-wrapper table card-container">
                 <DataTable :value="records" dataKey="id" contextMenu selectionMode="single"
                     v-model:selection="selectedRecord" v-model:contextMenuSelection="contextMenuRecord"
                     @row-contextmenu="onRowContextMenu" @row-dblclick="onEditRecord" scroll-height="52vh">
@@ -38,8 +38,12 @@
             </div>
         </div>
         <div class="horizontal padding10 gap10 bottom">
-            <div class="assets">
+            <div class="charts assets">
                 <AssetAllocationDiagram :loading="loading" :error="error" :allocation="allocation" />
+            </div>
+            <div class="charts history">
+                <PortfolioHistoryDiagram :error="historyError" :loading="historyLoading"
+                    :price-history="priceHistory" />
             </div>
         </div>
         <ContextMenu ref="cm" :model="menuModel" />
@@ -62,6 +66,8 @@ import { ref, onMounted, computed } from 'vue';
 import router from '../router';
 import AssetAllocationDiagram from '../components/Diary/AssetAllocationDiagram.vue';
 import { usePortfolioAnalytics } from '../composables/usePortfolioAnalytics';
+import { usePotfolioHistory } from '../composables/usePortfolioHistory';
+import PortfolioHistoryDiagram from '../components/Diary/PortfolioHistoryDiagram.vue';
 
 interface ContextMenuRef {
     show: (event: Event) => void;
@@ -78,6 +84,7 @@ const { records } = storeToRefs(diaryStore);
 const recordId = ref<number | undefined>(undefined);
 
 const { loading, error, totals, detailedCoinsPrices, allocation } = usePortfolioAnalytics(records)
+const { historyLoading, historyError, priceHistory } = usePotfolioHistory(records);
 
 const selectedRecordId = computed((): number => {
     return selectedRecord.value?.id || 0;
@@ -166,16 +173,24 @@ const onEditRecord = (event: any): void => {
     color: var(--purchase);
 }
 
-.assets {
+.charts {
     display: flex;
-    width: 50%;
+    margin-top: 20px;
+}
+
+.assets {
+    width: 40%;
+}
+
+.history {
+    width: 60%;
 }
 
 .top {
-    height: 50vh;
+    height: 45vh;
 }
 
 .bottom {
-    height: 35vh;
+    height: 40vh;
 }
 </style>

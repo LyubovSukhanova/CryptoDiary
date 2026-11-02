@@ -1,5 +1,5 @@
 <template>
-    <div class="asset-container">
+    <div class="asset-container card-container">
         <div ref="chartEl" class="chart"></div>
         <div v-if="loading" class="overlay">Загрузка цен...</div>
         <div v-else-if="error" class="overlay error">{{ error }}</div>
