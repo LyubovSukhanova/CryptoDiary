@@ -11,6 +11,8 @@ export interface Coin {
     price_usd: number;
     percent_change_24h: number;
     csupply: number;
+    market_cap_usd: number;
+    volume24: number;
 }
 
 export interface TickerResponse {
@@ -37,6 +39,7 @@ export const useCoinsStore = defineStore("coins", () => {
                 params: { start: 0, limit: 100 },
             });
             const data = response.data.data;
+            console.log("coins data", data);
             coinsTop100.value = data.map((d) => {
                 return {
                     id: d.id,
@@ -46,6 +49,8 @@ export const useCoinsStore = defineStore("coins", () => {
                     price_usd: Number(d.price_usd),
                     percent_change_24h: Number(d.percent_change_24h),
                     csupply: Number(d.csupply),
+                    market_cap_usd: Number(d.market_cap_usd),
+                    volume24: Number(d.volume24),
                 };
             });
         } catch (error) {

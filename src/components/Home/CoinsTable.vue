@@ -1,5 +1,6 @@
 <template>
-    <div class="table-wrapper">
+    <div class="table-wrapper card-container">
+        <h3>Монеты с наибольшей капитализацией</h3>
         <DataTable :value="coinsTop100" selectionMode="single" v-model:selection="selectedCoin"
             @row-select="handleRowSelect" dataKey="id" scroll-height="500px">
             <Column field="symbol" header="Символ" sortable style="width: 120px;" />

@@ -296,12 +296,22 @@ h2 {
     margin: 0 0 8px;
 }
 
+h3 {
+    font-size: 18px;
+    line-height: 110%;
+    letter-spacing: -0.1px;
+    margin: 2px 0;
+}
+
 @media (max-width: 1024px) {
     h1 {
         font-size: 36px;
     }
     h2 {
         font-size: 20px;
+    }
+    h3 {
+        font-size: 14px;
     }
 }
 
@@ -707,6 +717,16 @@ tbody td {
     box-shadow: 0 4px 12px var(--shadow);
 }
 
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-background {
+    background-color: var(--bg-elevated);
+}
+
 .profit {
     font-weight: 600;
     color: var(--success);
@@ -720,4 +740,10 @@ tbody td {
 .muted {
     color: var(--text-muted);
     font-size: 0.9rem;
+}
+
+.neutral {
+    font-size: larger;
+    font-weight: 500;
+    color: var(--text-h);
 }
